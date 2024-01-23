@@ -1,25 +1,76 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
+const SliderData = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1546768292-fb12f6c92568?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1501446529957-6226bd447c46?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1475189778702-5ec9941484ae?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1351&q=80",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
+  },
+];
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ImageSlider slides={SliderData} />
     </div>
   );
 }
 
-export default App;
+function ImageSlider({ slides }) {
+  const [current, setCurrent] = useState(0);
+  const length = slides.length;
+  console.log(length);
+
+  function prevSlide() {
+    return setCurrent(current === 0 ? length - 1 : current - 1);
+  }
+  function nextSlide() {
+    return setCurrent(current === length - 1 ? 0 : current + 1);
+  }
+
+  return (
+    <section className="slider">
+      {/* <div className="arrows">
+        <i className="gg-arrow-left-o left-arrow" onClick={prevSlide}></i>
+        <i className="gg-arrow-right-o" onClick={nextSlide}></i>
+      </div> */}
+
+      <i
+        className="gg-arrow-right-o arrows right-arrow"
+        onClick={nextSlide}
+      ></i>
+      <i className="gg-arrow-left-o arrows left-arrow" onClick={prevSlide}></i>
+
+      <div>
+        {slides.map((slide, i) => (
+          <div>
+            {i === current && (
+              <img
+                src={slide.image}
+                alt="slider-img"
+                className="image"
+                key={i}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <BiDotsHorizontalRounded />
+    </section>
+  );
+}
